@@ -1,5 +1,17 @@
 {
   "author": "peter@peterjhart.com",
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
   "dependencies": {
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
@@ -27,8 +39,17 @@
   "license": "MIT",
   "main": "index.js",
   "name": "url-shortener",
-  "scripts": {
-    "test": "vitest"
+  "prettier": {
+    "semi": false,
+    "singleQuote": true
   },
+  "scripts": {
+    "build": "tsc -b && vite build",
+    "start": "vite",
+    "preview": "vite preview",
+    "test": "vitest",
+    "test:once": "vitest run"
+  },
+  "type": "module",
   "version": "0.1.0"
 }
