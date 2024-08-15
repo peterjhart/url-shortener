@@ -21,7 +21,7 @@ func handler(writer http.ResponseWriter, request *http.Request) {
 		return
 	}
 
-	htmlFilePath := filepath.Join(cwd, "index.html")
+	htmlFilePath := filepath.Join(cwd, "frontend", "index.html")
 
 	content, err := os.ReadFile(htmlFilePath)
 	if err != nil {
