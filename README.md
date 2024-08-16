@@ -15,6 +15,14 @@ This also provides a way to track click-throughs.
 
 ## Getting Started
 
+### Add environment variables
+Copy file `.env.sample` and name it `.env`:
+```zsh
+cp .env.sample .env
+```
+Then edit the env file to set your preferred passwords, etc.
+
+### Running the app
 To start the app:
 ```zsh
 docker compose build

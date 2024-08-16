@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"regexp"
+	"url-shortener/backend/dbutils"
 )
 
 func redirectHandler(writer http.ResponseWriter, request *http.Request) {
@@ -32,6 +33,12 @@ func redirectHandler(writer http.ResponseWriter, request *http.Request) {
 }
 
 func main() {
+	dbClient, err := dbutils.Connect()
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer dbClient.Disconnect(nil)
+
 	http.Handle("/admin/", http.StripPrefix("/admin/", http.FileServer(http.Dir("./dist/admin"))))
 	http.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("./dist/assets"))))
 

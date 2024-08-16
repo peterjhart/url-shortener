@@ -11,8 +11,7 @@ RUN npm run build
 FROM golang:1.23 AS backend
 WORKDIR /app
 
-# Later: COPY backend/go.mod backend/go.sum ./
-COPY backend/go.mod ./
+COPY backend/go.mod backend/go.sum ./
 RUN go mod download
 
 COPY backend/. .
