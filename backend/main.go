@@ -1,52 +1,41 @@
 package main
 
 import (
-	"encoding/json"
+	"context"
+	"github.com/gorilla/mux"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 	"log"
 	"net/http"
-	"regexp"
-	"url-shortener/backend/dbutils"
+	"os"
+	"time"
+	"url-shortener/backend/handlers"
 )
 
-func redirectHandler(writer http.ResponseWriter, request *http.Request) {
-	log.Println("Handling route %s", request.URL.Path)
-
-	if request.URL.Path == "/" {
-		http.ServeFile(writer, request, "./dist/index.html")
-		return
-	}
-
-	matched, _ := regexp.MatchString(`^/[0-9a-zA-Z]+$`, request.URL.Path)
-	if !matched {
-		http.ServeFile(writer, request, "./dist/index.html")
-		return
-	}
-
-	writer.WriteHeader(http.StatusNotFound)
-	writer.Header().Set("Content-Type", "application/json; charset=utf-8")
-	err := json.NewEncoder(writer).Encode(map[string]string{"error": "Coming Soon"})
-	if err != nil {
-		log.Println("Error encoding JSON:", err)
-		return
-	}
-	return
-}
-
 func main() {
-	dbClient, err := dbutils.Connect()
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
+	mongoURI := os.Getenv("MONGO_URI")
+
+	client, err := mongo.Connect(ctx, options.Client().ApplyURI(mongoURI))
 	if err != nil {
 		log.Fatal(err)
+		return
 	}
-	defer dbClient.Disconnect(nil)
+	defer client.Disconnect(ctx)
 
-	http.Handle("/admin/", http.StripPrefix("/admin/", http.FileServer(http.Dir("./dist/admin"))))
-	http.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("./dist/assets"))))
+	db := client.Database("url_shortener")
+	linksCollection := db.Collection("links")
 
-	http.HandleFunc("/", redirectHandler)
+	r := mux.NewRouter()
+
+	r.HandleFunc("/", handlers.HomeHandler).Methods("GET")
+	r.HandleFunc("/api/links", handlers.GetLinksHandler(linksCollection)).Methods("GET")
+	r.HandleFunc("/api/links", handlers.CreateLinkHandler(linksCollection)).Methods("POST")
+	r.HandleFunc("/api/links/{id}", handlers.UpdateLinkHandler(linksCollection)).Methods("PATCH")
+	r.HandleFunc("/api/links/{id}", handlers.GetLinkHandler(linksCollection)).Methods("GET")
 
 	log.Println("Listening on port 8080")
-
-	if err := http.ListenAndServe(":8080", nil); err != nil {
-		log.Fatal("There was a problem starting the server:", err)
-	}
+	log.Fatal(http.ListenAndServe(":8080", r))
 }

@@ -4,7 +4,7 @@ services:
       context: .
       dockerfile: Dockerfile
     environment:
-      - MONGO_URI=mongodb://mongodb:27017/url_shortener_mongo
+      - MONGO_URI=mongodb://mongodb:27017
     depends_on:
       - mongodb
     ports:
