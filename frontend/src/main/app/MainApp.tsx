@@ -1,6 +1,6 @@
 import { ReactElement } from 'react'
 
-export default function App(): ReactElement {
+export default function MainApp(): ReactElement {
   return (
     <div>
       <h1>URL Shortener</h1>
