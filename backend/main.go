@@ -18,11 +18,27 @@ func main() {
 
 	mongoURI := os.Getenv("MONGO_URI")
 
-	client, err := mongo.Connect(ctx, options.Client().ApplyURI(mongoURI))
+	credentials := options.Credential{
+		Password: os.Getenv("MONGO_ADMIN_PASSWORD"),
+		Username: os.Getenv("MONGO_ADMIN_USERNAME"),
+	}
+
+	clientOptions := options.Client().ApplyURI(mongoURI).SetAuth(credentials)
+	client, err := mongo.Connect(ctx, clientOptions)
 	if err != nil {
+		log.Println("Error connecting to MongoDB")
 		log.Fatal(err)
 		return
 	}
+
+	log.Println("Connected to MongoDB")
+	err = client.Ping(ctx, nil)
+	if err != nil {
+		log.Println("Error pinging MongoDB")
+		log.Fatal(err)
+		return
+	}
+	//noinspection GoUnhandledErrorResult
 	defer client.Disconnect(ctx)
 
 	db := client.Database("url_shortener")
