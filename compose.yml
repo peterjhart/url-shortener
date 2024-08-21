@@ -4,7 +4,9 @@ services:
       context: .
       dockerfile: Dockerfile
     environment:
-      - MONGO_URI=mongodb://mongodb:27017
+      - MONGO_URI=mongodb://mongodb:27017/admin
+      - MONGO_ADMIN_USERNAME=${MONGO_ADMIN_USERNAME}
+      - MONGO_ADMIN_PASSWORD=${MONGO_ADMIN_PASSWORD}
     depends_on:
       - mongodb
     ports:
@@ -14,9 +16,9 @@ services:
       image: mongo:latest
       container_name: url_shortener_mongo
       environment:
-        MONGO_INITDB_ROOT_USERNAME: ${MONGO_ADMIN_USERNAME}
-        MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ADMIN_PASSWORD}
-        MONGO_INITDB_DATABASE: url_shortener
+        - MONGO_INITDB_ROOT_USERNAME=${MONGO_ADMIN_USERNAME}
+        - MONGO_INITDB_ROOT_PASSWORD=${MONGO_ADMIN_PASSWORD}
+        - MONGO_INITDB_DATABASE=url_shortener
       ports:
         - "27017:27017"
       restart: always

@@ -11,7 +11,6 @@ This also provides a way to track click-throughs.
 * Backend: Go
 * Frontend: React
 * Database: MongoDB
-* ORM: Prisma
 
 ## Getting Started
 
