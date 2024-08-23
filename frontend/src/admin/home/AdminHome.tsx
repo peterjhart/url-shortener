@@ -1,6 +1,10 @@
-import { ReactElement } from 'react'
+import { ReactElement, useEffect } from 'react'
 
 export default function AdminHome(): ReactElement {
+  useEffect(() => {
+    document.title = 'URL Shortener Admin'
+  }, [])
+
   return (
     <>
       <h1>URL Shortener Admin</h1>
