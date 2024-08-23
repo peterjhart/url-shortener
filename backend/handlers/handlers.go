@@ -88,13 +88,16 @@ func GetLinksHandler(collection *mongo.Collection) http.HandlerFunc {
 	}
 }
 
-func HomeHandler(w http.ResponseWriter, _ *http.Request) {
-	w.Header().Set("Content-Type", "text/html")
-	w.WriteHeader(http.StatusOK)
-	_, err := w.Write([]byte(`<!DOCTYPE html><html><head><title>URL SHORTENER API</title></head><body></html>`))
-	if err != nil {
-		return
-	}
+func HomeHandler(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "./dist/index.html")
+
+}
+
+func RedirectHandler(w http.ResponseWriter, r *http.Request) {
+	log.Println("Redirect", r.URL.Path)
+
+	url := "http://hirehart.com"
+	http.Redirect(w, r, url, http.StatusMovedPermanently)
 }
 
 func UpdateLinkHandler(collection *mongo.Collection) http.HandlerFunc {
