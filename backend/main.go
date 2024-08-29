@@ -51,10 +51,12 @@ func main() {
 	r.HandleFunc("/api/links", handlers.CreateLinkHandler(linksCollection)).Methods("POST")
 	r.HandleFunc("/api/links", handlers.GetLinksHandler(linksCollection)).Methods("GET")
 
-	r.PathPrefix("/admin/").Handler(http.StripPrefix("/admin/", http.FileServer(http.Dir("./dist/admin"))))
+	r.PathPrefix("/admin/assets/").Handler(http.StripPrefix("/admin/assets/", http.FileServer(http.Dir("./dist/admin/assets"))))
+	r.PathPrefix("/admin/").HandlerFunc(handlers.AdminSpaHandler)
+
 	r.PathPrefix("/assets/").Handler(http.StripPrefix("/assets/", http.FileServer(http.Dir("./dist/assets"))))
 	r.HandleFunc("/{alias:[a-z0-9]+}", handlers.RedirectHandler).Methods("GET")
-	r.HandleFunc("/", handlers.HomeHandler).Methods("GET")
+	r.PathPrefix("/").HandlerFunc(handlers.HomeHandler)
 
 	log.Println("Listening on port 8080")
 	log.Fatal(http.ListenAndServe(":8080", r))

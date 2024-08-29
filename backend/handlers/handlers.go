@@ -13,6 +13,10 @@ import (
 	"url-shortener/backend/models"
 )
 
+func AdminSpaHandler(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "dist/admin/index.html")
+}
+
 func CreateLinkHandler(collection *mongo.Collection) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
@@ -90,7 +94,6 @@ func GetLinksHandler(collection *mongo.Collection) http.HandlerFunc {
 
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "./dist/index.html")
-
 }
 
 func RedirectHandler(w http.ResponseWriter, r *http.Request) {
