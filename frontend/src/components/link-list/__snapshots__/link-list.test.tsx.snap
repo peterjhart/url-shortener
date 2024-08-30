@@ -1,0 +1,58 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`LinkList > Snapshots > matches snapshot 1`] = `
+<DocumentFragment>
+  <table
+    class="table-auto w-full bg-gray-100"
+  >
+    <thead
+      class="bg-gray-300"
+    >
+      <tr>
+        <th
+          class="bg-gray-300 rounded-tl-md text-left"
+        >
+          Alias
+        </th>
+        <th
+          class="bg-gray-300 rounded-tr-md text-left"
+        >
+          Link
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        class="border border-t-0"
+      >
+        <td>
+          ## ALIAS ONE ##
+        </td>
+        <td>
+          ## URL ONE ##
+        </td>
+      </tr>
+      <tr
+        class="border border-t-0"
+      >
+        <td>
+          ## ALIAS TWO ##
+        </td>
+        <td>
+          ## URL TWO ##
+        </td>
+      </tr>
+      <tr
+        class="border border-t-0"
+      >
+        <td>
+          ## ALIAS THREE ##
+        </td>
+        <td>
+          ## URL THREE ##
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</DocumentFragment>
+`;
