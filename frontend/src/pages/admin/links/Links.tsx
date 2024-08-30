@@ -1,6 +1,7 @@
 import { ReactElement, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { getLinks, ShortenedLink } from '@/lib/api/api.ts'
+import { getLinks, ShortenedLink } from '@/lib/api/api'
+import LinkList from '@/components/link-list/link-list'
 
 export default function Links(): ReactElement {
   const [links, setLinks] = useState<ShortenedLink[]>([])
@@ -23,32 +24,7 @@ export default function Links(): ReactElement {
         <Link to="/admin/links/create">New Link</Link>
       </div>
 
-      <table className="table-auto w-full bg-gray-100">
-        <thead className="bg-gray-300">
-          <tr>
-            <th className="bg-gray-300 rounded-tl-md text-left">Alias</th>
-            <th className="bg-gray-300 rounded-tr-md text-left">Link</th>
-          </tr>
-        </thead>
-        <tbody>
-          {links.map((shortenedLink) => (
-            <LinkRow key={shortenedLink.id} shortenedLink={shortenedLink} />
-          ))}
-        </tbody>
-      </table>
+      <LinkList links={links} />
     </div>
-  )
-}
-
-function LinkRow({
-  shortenedLink,
-}: {
-  shortenedLink: ShortenedLink
-}): ReactElement {
-  return (
-    <tr className="border border-t-0">
-      <td>{shortenedLink.alias}</td>
-      <td>{shortenedLink.url}</td>
-    </tr>
   )
 }
