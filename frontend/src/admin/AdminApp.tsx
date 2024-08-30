@@ -1,9 +1,9 @@
 import { ReactElement } from 'react'
 import { Routes, Route, Link } from 'react-router-dom'
-import AdminHome from '../home/AdminHome'
+import AdminHome from '../pages/admin/home/AdminHome'
 
-import Links from '../links/Links'
-import LinkCreate from '../links/LinkCreate'
+import Links from '../pages/admin/links/Links'
+import LinkCreate from '../pages/admin/links/LinkCreate'
 
 export default function AdminApp(): ReactElement {
   return (
