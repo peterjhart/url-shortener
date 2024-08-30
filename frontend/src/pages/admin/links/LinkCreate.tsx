@@ -6,7 +6,7 @@ import {
   useState,
 } from 'react'
 import { Link } from 'react-router-dom'
-import { createLink } from '../../../lib/api/api'
+import { createLink } from '@/lib/api/api.ts'
 
 export default function LinkCreate(): ReactElement {
   const [alias, setAlias] = useState<string>('')

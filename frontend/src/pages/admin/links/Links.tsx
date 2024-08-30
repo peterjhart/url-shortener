@@ -1,6 +1,6 @@
 import { ReactElement, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { getLinks, ShortenedLink } from '../../../lib/api/api'
+import { getLinks, ShortenedLink } from '@/lib/api/api.ts'
 
 export default function Links(): ReactElement {
   const [links, setLinks] = useState<ShortenedLink[]>([])
