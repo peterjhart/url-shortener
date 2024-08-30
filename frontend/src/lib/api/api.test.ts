@@ -1,20 +1,7 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { createLink, getLinks, ShortenedLink } from './api'
 
-function mockFetch() {
-  return vi.fn().mockImplementation(() => {
-    return Promise.resolve({
-      ok: true,
-      json: () => Promise.resolve({}),
-    })
-  })
-}
-
 describe('API', () => {
-  beforeEach(() => {
-    vi.stubGlobal('fetch', mockFetch())
-  })
-
   describe('createLink', () => {
     const URL = '/api/links'
 
@@ -57,10 +44,10 @@ describe('API', () => {
         { id: 'def', alias: '## ALIAS TWO ##', url: '## URL TWO ##' },
       ]
 
-      global.fetch.mockResolvedValue({
+      vi.mocked(global.fetch).mockResolvedValue({
         ok: true,
         json: () => Promise.resolve([...links]),
-      })
+      } as Response)
 
       const result = await getLinks()
       expect(global.fetch).toHaveBeenCalledWith(URL, expectedOptions)
