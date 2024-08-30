@@ -1,11 +1,11 @@
 export interface ShortenedLink {
   id: string
   url: string
-  alias?: string
+  alias: string
   createdAt?: string
 }
 
-export async function createLink(link: string, alias?: string): Promise<void> {
+export async function createLink(link: string, alias: string): Promise<void> {
   const url = '/api/links'
   const body = JSON.stringify({ alias, url: link } as ShortenedLink)
   const options = {
