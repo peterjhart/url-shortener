@@ -6,19 +6,7 @@ import {
   useState,
 } from 'react'
 import { Link } from 'react-router-dom'
-import { ShortenedLink } from './Links'
-
-async function sendLink(link: string, alias?: string): Promise<void> {
-  const url = '/api/links'
-  const body = JSON.stringify({ alias, url: link } as ShortenedLink)
-  const options = {
-    method: 'POST',
-    headers: {},
-    body,
-  }
-  const response = await fetch(url, options)
-  await response.json()
-}
+import { createLink } from '../../../lib/api/api'
 
 export default function LinkCreate(): ReactElement {
   const [alias, setAlias] = useState<string>('')
@@ -39,7 +27,7 @@ export default function LinkCreate(): ReactElement {
   async function submit(event: MouseEvent<HTMLButtonElement>) {
     event.preventDefault()
     event.stopPropagation()
-    await sendLink(link, alias)
+    await createLink(link, alias)
     setLink('')
     setAlias('')
   }

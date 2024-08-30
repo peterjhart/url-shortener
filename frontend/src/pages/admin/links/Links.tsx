@@ -1,21 +1,6 @@
 import { ReactElement, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-
-export interface ShortenedLink {
-  id: string
-  url: string
-  alias?: string
-  createdAt?: string
-}
-
-async function getLinks(): Promise<ShortenedLink[]> {
-  const url = '/api/links'
-  const options = {
-    method: 'GET',
-  }
-  const response = await fetch(url, options)
-  return await response.json()
-}
+import { getLinks, ShortenedLink } from '../../../lib/api/api'
 
 export default function Links(): ReactElement {
   const [links, setLinks] = useState<ShortenedLink[]>([])
